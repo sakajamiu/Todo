@@ -1,0 +1,147 @@
+.moon{
+    float: right;
+    cursor:pointer;
+    
+}
+.header{
+    color: white;
+    text-align: left;
+    margin: 0px;
+    padding: 0px;
+}
+.container{
+
+    width: 40%;
+    margin: auto;
+    text-align: center;
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    right:30%
+}
+.form{
+    margin-top: 15px;
+    
+    
+}
+.input{
+    background: url('../../images/favicon-32x32.png') no-repeat scroll 7px 7px;
+    background-size: 20px;
+ 
+}
+.input::placeholder{
+  padding-left: 25px!important;
+}
+.input:focus{
+    border-color: none !important;
+    box-shadow: none !important;
+    padding-left: 28px;
+}
+.ListGroup{
+    margin-top: 15px;
+    text-align: left;
+    margin-bottom: 0px;
+}
+.ListGroup2{
+    margin-top: 0px;
+    text-align: left;
+}
+.label{
+    float: left;
+    cursor:pointer;
+
+}
+.itemLeft{
+    text-align: left;
+    cursor:pointer;
+    padding-right: 25px ;
+    color: gray;
+}
+.itemRight{
+    float: right;
+    cursor: pointer;
+    color: gray;
+}
+.span{
+    float: right;
+    cursor: pointer;
+    height: 0.7em;  
+    width: 0.7em;
+    display: none;
+}
+.img{
+    float: right;
+    cursor: pointer;
+    height: 0.2em;  
+    width: 0.2em;
+}
+.spanControl{
+    text-align: center;
+    padding: 0 15px;
+    cursor: pointer;
+    color: gray;
+}
+.mobileDiv{
+    text-align: center;
+    margin-top: 20px;
+    
+}
+.mobileSpan{
+    padding: 0 5px;
+    cursor: pointer;
+    color: gray;
+}
+.radio{
+   background-color: #9a89f8; 
+   display: grid;
+   border-radius: 50%;
+   width: 1em;
+   height: 1em;
+   place-content: center;
+   padding:2px 2px;
+}
+input[type="radio"] {
+    width: 1em;
+    height: 1em;
+    display: grid;
+    place-content: center;
+}
+.formLabel:hover + .span{
+ display: inline;
+}
+.formLabel{
+    padding-right: 15px;
+    
+}
+.control{
+    font-size: smaller !important;
+}
+.p{
+    color: gray;
+    margin-top: 25px;
+}
+@media screen and (max-width:480px) {
+    
+    .container{
+        width: 80%;
+        left:10%;
+        right: 10%;
+        top: 8%
+    }
+}
+@media  screen and (max-width:821px) {
+    .container{
+        top:3%;
+        width: 80%;
+        left: 10%;
+        right: 10%;
+    }
+} 
+    
+@media  (max-width:1024px){
+    .spanControl{
+
+        padding: 0 6px;
+
+    }
+}
