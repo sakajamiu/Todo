@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import { Form, ListGroup } from 'react-bootstrap'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import moon from '../../images/icon-moon.svg'
@@ -12,8 +12,6 @@ import {
   complete,
   clear ,
   createTodo ,
-  active,
-  Allcompleted,
   clearAllCompleted,
   updateTaskList
 } from '../../reducer/todoReducer'
@@ -23,7 +21,8 @@ import useMediaQuery from '../../hooks/mediaQuery'
 export const Todo = () => {
   const dispatch = useDispatch()
   const isLight  = useSelector(state => state.theme)
-  const todo = useSelector(state => state.todo)
+  const todos = useSelector(state => state.todo)
+  const [todo, setTodo ] =useState(Array.from(todos))
   const image = isLight? moon: sun
   const dark = isLight? '': 'Dark1'
   const spanControl = isLight? 'spanControl2': 'spanControl1'
@@ -33,16 +32,24 @@ export const Todo = () => {
 
   const completed = (task) => {
     dispatch(complete(task))
+    setTodo(todo.map(tasks => tasks.id !== task.id ? tasks: { ...task, completed: !task.completed }))
   }
-  const Active = () => {
-    dispatch(active())
+  const Active = async() => {
+    let dummy = Array.from(todos)
+    setTodo(dummy.filter(task => task.completed === false))
   }
-
+  const All = async() => {
+    let dummy = Array.from(todos)
+    setTodo(dummy)
+  }
   const deleteTask = (task) => {
     dispatch(clear(task))
+    setTodo(todo.filter(state => state.id !== task.id))
   }
-  const allCompleted = () => {
-    dispatch(Allcompleted())
+  const allCompleted =async () => {
+    let dummy = Array.from(todos)
+    setTodo(dummy.filter(task => task.completed === true))
+
   }
   const createTask = (event) => {
     event.preventDefault()
@@ -53,15 +60,20 @@ export const Todo = () => {
     }
     event.target.task.value = ' '
     dispatch(createTodo(task))
+    setTodo(todo.concat(task))
   }
-  const clearCompleted = () => {
+  const clearCompleted = async() => {
     dispatch(clearAllCompleted())
+    let dummy = Array.from(todos)
+    setTodo(dummy.filter(task => task.completed === false))
+
   }
   function handleOnDragEnd(result) {
     if(!result.destination) return
     const tasks = Array.from(todo)
     const [reOrderTasks] = tasks.splice(result.source.index, 1)
     tasks.splice(result.destination.index,0,reOrderTasks)
+    setTodo((tasks))
     dispatch(updateTaskList(tasks))
   }
   return(
@@ -130,7 +142,7 @@ export const Todo = () => {
           {
             mobileDevice? ' ':
               <>
-                <span className={styles.spanControl} id={`${spanControl}`}>All</span>
+                <span className={styles.spanControl} id={`${spanControl}`} onClick = {() => All()}>All</span>
                 <span className={styles.spanControl} id={`${spanControl}`} onClick = {() => Active()}>Active</span>
                 <span className={styles.spanControl} id={`${spanControl}`} onClick={() => allCompleted()}>Completed</span>
               </>
@@ -141,7 +153,7 @@ export const Todo = () => {
           mobileDevice?
 
             <ListGroup.Item className={styles.mobileDiv} id = {`${dark}`}>
-              <span className={styles.mobileSpan} id={`${spanControl}`}>All</span>
+              <span className={styles.mobileSpan} id={`${spanControl}`} onClick = {() => All()}>All</span>
               <span className={styles.mobileSpan}id={`${spanControl}`} onClick = {() => Active()}>Active</span>
               <span className={styles.mobileSpan}id={`${spanControl}`} onClick={() => allCompleted()}>Completed</span>
             </ListGroup.Item>: ' '
